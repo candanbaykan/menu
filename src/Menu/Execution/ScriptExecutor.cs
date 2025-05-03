@@ -1,21 +1,19 @@
 using Menu.NativeInterop;
-using Menu.Parser;
+using Spectre.Console;
 
 namespace Menu.Execution;
 
 public static class ScriptExecutor
 {
-    public static int Execute(IEnumerable<Instruction> script)
+    public static int Execute(IEnumerable<string> script)
     {
-        foreach (var instruction in script)
+        foreach (var command in script)
         {
-            using EnvironmentScope scope = new(instruction.Environment);
-
-            var code = Native.System(instruction.Command);
+            var code = Native.System(command);
 
             if (code != 0)
             {
-                Console.Error.WriteLine($"{instruction.Command} returned {code}.");
+                AnsiConsole.MarkupLineInterpolated($"[red]Error:[/] {command} returned {code}.");
                 return code;
             }
         }

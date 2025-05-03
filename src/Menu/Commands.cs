@@ -28,12 +28,10 @@ public class Commands
 
         var item = await AnsiConsole.PromptAsync(
             new SelectionPrompt<MenuItem>()
-                .Title(root.Menu.Title)
-                .AddChoices(root.Menu.Items)
-                .UseConverter(a => a.Name),
+                .Title(root.Title)
+                .AddChoices(root.Menu)
+                .UseConverter(i => i.Name),
             ct);
-
-        using EnvironmentScope scope = new(root.Environment);
 
         return ScriptExecutor.Execute(item.Script);
     }
@@ -50,24 +48,16 @@ public class Commands
         await File.WriteAllTextAsync(
             output,
             """
+            title: Menu
             menu:
-              title: Menu
-              items:
-                - name: Single
-                  script:
-                    - command: set
-                - name: Multiple
-                  script:
-                    - command: set
-                      environment:
-                        BAR: foo
-                    - command: echo ------------------------------------------------------------------------------------
-                    - command: set
-
-            environment:
-              FOO: foo
-              BAR: bar
-
+              - name: Single
+                script:
+                  - echo Hello, World!
+              - name: Multiple
+                script:
+                  - echo Hello, World!
+                  - echo Goodbye, World!
+            
             """,
             ct);
 

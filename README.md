@@ -1,8 +1,8 @@
 # Menu
 
-Menu is a console-based tool for displaying and executing customizable menus defined in YAML files. It allows users to define commands and environment variables in a structured format and execute them interactively.
+Menu is a console-based tool for displaying and executing customizable menus defined in YAML files. It allows users to define commands in a structured format and execute them interactively.
 
-## Requirements
+## Build Requirements
 
 - .NET 9.0 SDK
 
